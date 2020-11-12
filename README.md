@@ -1,11 +1,3 @@
-# Tasks
+# NBA prediction model
 
-## Create player score
-* Weight box score statistics by recency.
-
-## Create team score
-* Team score: weight player's scores by weighted minutes played
-
-## Use classification method
-* Feature vector: [player_score_diff, rest_days_diff]
-* Target vector: [home_win_binary]
+My goal is to predict the outcome of NBA games. I started by scraping data from basketball-reference.com. I scraped data from the 2014-2015 season to the 2018-2019 season. I used an indicator for whether the home team won as the target variable. I decided to use margin of victory as a way to account for a team's previous performance. I also wanted to account for how recent performance matters most, so instead of taking the mean margin of victory, I decided to take the exponentially weighted margin of victory for each team. Then for each game I took the difference of the home and away teams' exponentially weighted margins of victory as the predictor variable. Including an intercept allowed me to account for home court advantage. I started by setting apart the last 1000 games as the validation set. I performed cross validation on the remaining data in order to find the optimal alpha value for the exponential smoothing. I then fit a logistic regression model, and found that the accuracy on the validation set was 0.67. Most NBA predictive models tend to run between 0.6 and 0.7, so this is pretty good performance especially for a simple model. 
